@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<head>
+  <title>Pusher Test</title>
+  <script src="https://js.pusher.com/4.3/pusher.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.js"></script>
+  <script>
+
+    // Enable pusher logging - don't include this in production
+    Pusher.logToConsole = true;
+
+    var pusher = new Pusher('a8ee0fa5cc66b88f3a48', {
+      cluster: 'us2',
+      forceTLS: true
+    });
+      
+    var channel = pusher.subscribe('my-channel');
+    channel.bind('my-event', function(data) {
+      console.log(data)
+      let msg = document.getElementById('messages')
+      msg.innerHTML += `<div>${data.nick}: ${data.message}</div>`
+    });
+
+    function submit () {
+      console.log('submiting')
+      axios.post('http://localhost:3000/', {
+        message: document.getElementById('text').value,
+        nick: document.getElementById('nick').value
+      }).then((data) => {
+        console.log('sended')
+      })
+    }
+  </script>
+</head>
+<body>
+  <h1>Pusher Test</h1>
+  <p>
+    Try publishing an event to channel <code>my-channel</code>
+    with event name <code>my-event</code>.
+  </p>
+  <div id="messages">
+
+  </div>
+
+  <input id="nick" type="text" placeholder="cómo te haces llamar?">
+  <input id="text" type="text" placeholder="escribe un mensaje">
+  <button onclick="submit()">Mandar</button>
+</body>
