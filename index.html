@@ -22,7 +22,7 @@
 
     function submit () {
       console.log('submiting')
-      axios.post('http://localhost:3000/', {
+      axios.post('https://repl.it/@ralexrdz/pusher-node-server/', {
         message: document.getElementById('text').value,
         nick: document.getElementById('nick').value
       }).then((data) => {
