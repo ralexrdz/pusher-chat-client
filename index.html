@@ -22,7 +22,10 @@
 
     function submit () {
       console.log('submiting')
-      axios.get('https://pusher-node-server--ralexrdz.repl.co/').then((data) => {
+      axios.post('https://pusher-node-server--ralexrdz.repl.co/', {
+        message: document.getElementById('text').value,
+        nick: document.getElementById('nick').value
+      }).then((data) => {
         console.log(data)
         console.log('sended')
       })
